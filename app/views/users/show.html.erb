@@ -1,0 +1,20 @@
+<h1><%= @user.username%>'s Page</h1>
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
+<h2>Email: <%= @user.email %></h2>
+<h2>Device ID: <%= @user.device_id %>
+  <button onclick="showBG()">
+    Show/Hide BGs
+  </button>
+</h2>
+<h3><% @user.entries.sort_by{|entry| entry.bg}.each do |entry|%></h3>
+  <p class="hidden"><%= entry.created_at %>BG: <%= entry.bg %></p>
+<h3><% end %></h3>
+
+
+<%= pie_chart @chart %>
+<%= pie_chart @user.entries.group(:bg).count %>
+<%= scatter_chart @user.entries.pluck(:created_at, :bg), xtitle: "Date/Time", ytitle: "Blood Glucose" %>

@@ -16,7 +16,7 @@
 #     :blood_sugar_upper => "200"
 #     )
 # end
-user=User.all
+user=Use.all
 user.each do |user| 
   10.times do
     Entry.create(

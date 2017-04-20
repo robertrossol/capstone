@@ -1,4 +1,17 @@
 class UsersController < ApplicationController
+  def show
+    user_id = params[:id]
+    @user = User.find_by(id: user_id)
+    low=@user.entries.where("bg < #{@user.blood_sugar_lower}").count
+    med=@user.entries.where("bg > #{@user.blood_sugar_lower} and bg < #{@user.blood_sugar_upper}").count
+    high=@user.entries.where("bg > #{@user.blood_sugar_upper}").count
+    @chart = {}
+    @chart[:low]=low
+    @chart[:med]=med
+    @chart[:high]=high
+    render 'show.html.erb'
+  end
+
   def new
     render 'new.html.erb'
   end
