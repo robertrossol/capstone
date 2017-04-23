@@ -13,7 +13,12 @@
 <h3><% @user.entries.sort_by{|entry| entry.bg}.each do |entry|%></h3>
   <p class="hidden"><%= entry.created_at %>BG: <%= entry.bg %></p>
 <h3><% end %></h3>
-
+<%= form_tag "/entries", method: :post do %>
+  <div>
+    BG: <input type='integer' name="bg">
+  <input type ="submit" value="Add BG">
+  </div>
+<% end %>
 
 <%= pie_chart @chart %>
 <%= pie_chart @user.entries.group(:bg).count %>
