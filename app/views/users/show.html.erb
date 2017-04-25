@@ -6,12 +6,18 @@
 </style>
 <h2>Email: <%= @user.email %></h2>
 <h2>Device ID: <%= @user.device_id %>
-  <button onclick="showBG()">
+<div id="app">
+  <button v-on:click="showBG()">
     Show/Hide BGs
   </button>
+  <button v-on:click="showDaily()">
+  Show Today's Results/Earn Points
+  </button>
+</div>
 </h2>
 <h3><% @user.entries.sort_by{|entry| entry.bg}.each do |entry|%></h3>
-  <p class="hidden"><%= entry.created_at %>BG: <%= entry.bg %></p>
+  <p id=entries class="hidden"><%= entry.created_at %>BG: <%= entry.bg %></p>
+
 <h3><% end %></h3>
 <%= form_tag "/entries", method: :post do %>
   <div>
@@ -21,5 +27,13 @@
 <% end %>
 
 <%= pie_chart @chart %>
+<div id="thing"class="hidden"> <%= pie_chart @daychart %> </div>
+
 <%= pie_chart @user.entries.group(:bg).count %>
 <%= scatter_chart @user.entries.pluck(:created_at, :bg), xtitle: "Date/Time", ytitle: "Blood Glucose" %>
+<%= scatter_chart @user.entries.pluck(:created_at, :bg), xtitle: "Time", ytitle: "Blood Glucose" %>
+
+<%= line_chart @user.entries.group_by_day(:created_at, format: "%l %P").count%>
+<% @bgs.each do |entry| %>
+  <%= entry.bg %>
+<% end %>

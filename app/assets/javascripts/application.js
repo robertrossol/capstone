@@ -14,6 +14,6 @@
 //= require jsapi
 //= require chartkick
 //= require jquery_ujs
-//= require turbolinks
+//= require vue
 //= require_tree .
 
