@@ -1,39 +1,42 @@
-<h1><%= @user.username%>'s Page</h1>
-<style>
-  .hidden {
-    display: none;
-  }
-</style>
-<h2>Email: <%= @user.email %></h2>
-<h2>Device ID: <%= @user.device_id %>
-<div id="app">
-  <button v-on:click="showBG()">
+<div id='app'>
+  <h1><%= @user.username%>'s Page</h1>
+  <h2>Email: <%= @user.email %></h2>
+  <h2>Device ID: <%= @user.device_id %>
+  <h2>Level: <%= @user.calc_level(@user) %></h2>
+  <h3>Points To Next Level: <%= @user.points_left %></h2>
+  <p>Points: <%= @user.total_points(@user) %> </p>
+
+  <button v-on:click="showBG">
     Show/Hide BGs
   </button>
   <button v-on:click="showDaily()">
   Show Today's Results/Earn Points
   </button>
+  </h2>
+  <h3><% @user.entries.sort_by{|entry| entry.bg}.each do |entry|%></h3>
+    <p class="entries hidden" ><%= entry.created_at %>BG: <%= entry.bg %></p>
+
+  <h3><% end %></h3>
+  <%= form_tag "/entries", method: :post do %>
+    <div>
+      BG: <input type='integer' name="bg">
+    <input type ="submit" value="Add BG">
+    </div>
+  <% end %>
+  <%= form_tag "/points", method: :post do %>
+    <div>
+      <input type='integer' class="hidden" name="value">
+    <input type ="submit" value="Add Points">
+    </div>
+  <% end %>
+  <div class="thing hidden"> <%= pie_chart @daychart %> </div>
 </div>
-</h2>
-<h3><% @user.entries.sort_by{|entry| entry.bg}.each do |entry|%></h3>
-  <p id=entries class="hidden"><%= entry.created_at %>BG: <%= entry.bg %></p>
-
-<h3><% end %></h3>
-<%= form_tag "/entries", method: :post do %>
-  <div>
-    BG: <input type='integer' name="bg">
-  <input type ="submit" value="Add BG">
-  </div>
-<% end %>
-
+<%= pie_chart @daychart %>
 <%= pie_chart @chart %>
-<div id="thing"class="hidden"> <%= pie_chart @daychart %> </div>
-
 <%= pie_chart @user.entries.group(:bg).count %>
-<%= scatter_chart @user.entries.pluck(:created_at, :bg), xtitle: "Date/Time", ytitle: "Blood Glucose" %>
-<%= scatter_chart @user.entries.pluck(:created_at, :bg), xtitle: "Time", ytitle: "Blood Glucose" %>
+  <%= scatter_chart @user.entries.pluck(:created_at, :bg), xtitle: "Time", ytitle: "Blood Glucose" %>
 
-<%= line_chart @user.entries.group_by_day(:created_at, format: "%l %P").count%>
-<% @bgs.each do |entry| %>
-  <%= entry.bg %>
-<% end %>
+  <%= line_chart @user.entries.group_by_day(:created_at, format: "%l %P").count%>
+  <% @bgs.each do |entry| %>
+    <%= entry.bg %>
+  <% end %>
