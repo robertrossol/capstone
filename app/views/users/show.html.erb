@@ -5,6 +5,10 @@
   <h2>Level: <%= @user.calc_level(@user) %></h2>
   <h3>Points To Next Level: <%= @user.points_left %></h2>
   <p>Points: <%= @user.total_points(@user) %> </p>
+  <div>
+    <input type="file" value="@file">
+    <input type ="submit" value="Import Data">
+  </div>
 
   <button v-on:click="showBG">
     Show/Hide BGs

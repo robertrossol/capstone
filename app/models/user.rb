@@ -5,8 +5,10 @@ class User < ApplicationRecord
 
   def total_points(user)
     total=0
-    user.points.each do |point|
-      total+=point.value
+    if user.points.length != 0
+      user.points.each do |point|
+        total+=point.value
+      end
     end
     return total
   end

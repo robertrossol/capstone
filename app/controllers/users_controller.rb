@@ -3,6 +3,10 @@ class UsersController < ApplicationController
     user_id = params[:id]
     @user = User.find_by(id: user_id)
     now = Time.now
+    #@data={}
+    # @data = File.open("/Users/apple/Downloads/BgData/exportCSV20170501-192317.zip","r")
+    
+
 
     low=@user.entries.where("bg < #{@user.blood_sugar_lower}").count
     med=@user.entries.where("bg > #{@user.blood_sugar_lower} and bg < #{@user.blood_sugar_upper}").count
