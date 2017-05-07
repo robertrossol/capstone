@@ -3,12 +3,17 @@ class PointsController < ApplicationController
   def create
     if current_user
       @user = current_user
-      @data = File.open("/Users/apple/Downloads/BgData/export20170501-192317.csv","r")
+      # @data = File.open("/Users/apple/Downloads/export20170503-180101.csv","r")
+      if params[:file]
+        @data = params[:file].tempfile
+      end
       if @data
-        @data.drop(1).each do |line|   
+        @data.drop(1).each do |line| 
+          puts "Line: "
+          p line  
           x=line.split(';') 
           time = ((x[0] + " " + x[1]).to_time)
-          if @user.entries[-1].created_at < Time.now-24.hours 
+          if @user.entries.length==0 || @user.entries[-1].created_at < Time.now-24.hours 
             entry=Entry.new(bg: x[2], user_id: current_user.id, created_at: time)
             if time+24.hours >= Time.now
               entry.save 
@@ -30,7 +35,7 @@ class PointsController < ApplicationController
         flash[:success] = 'Points Added Successfully'
         redirect_to "/users/#{current_user.id}"
       else
-        flash[:warning] = 'Points Already Added Today'
+        flash[:warning] = 'Points Already Added Today or File Not Selected'
         redirect_to "/users/#{current_user.id}"
       end
     end

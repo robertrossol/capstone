@@ -1,46 +1,44 @@
-<div id='app'>
+
   <h1><%= @user.username%>'s Page</h1>
   <h2>Email: <%= @user.email %></h2>
   <h2>Device ID: <%= @user.device_id %>
   <h2>Level: <%= @user.calc_level(@user) %></h2>
-  <h3>Points To Next Level: <%= @user.points_left %></h2>
-  <p>Points: <%= @user.total_points(@user) %> </p>
-  <div>
-    <input type="file" value="@file">
-    <input type ="submit" value="Import Data">
-  </div>
-
+  <h3>Points: <%= @user.total_points(@user) %> </h3>
+  <p>Points To Next Level: <%= @user.points_left %></p>
+  <div id='app'>
   <button v-on:click="showBG">
     Show/Hide BGs
   </button>
-  <button v-on:click="showDaily()">
+  </div>
+  <!-- <button v-on:click="showDaily()">
   Show Today's Results/Earn Points
-  </button>
+  </button> -->
   </h2>
-  <h3><% @user.entries.sort_by{|entry| entry.bg}.each do |entry|%></h3>
-    <p class="entries hidden" ><%= entry.created_at %>BG: <%= entry.bg %></p>
-
-  <h3><% end %></h3>
-  <%= form_tag "/entries", method: :post do %>
+  <div class="entries hidden" style="height:120px;width:300px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+    <h3></a> <% @user.entries.sort_by{|entry| entry.created_at}.each do |entry|%></h3>
+      <p><%= entry.created_at %> BG: <%= entry.bg %></p>
+    <h3><% end %></h3>
+  </div>
+  <%= form_tag "/points", method: :post, multipart: true do %>
     <div>
+      <input type="file" name="file">
+    </div>
+    <!-- <div>
       BG: <input type='integer' name="bg">
     <input type ="submit" value="Add BG">
-    </div>
-  <% end %>
-  <%= form_tag "/points", method: :post do %>
+    </div> -->
     <div>
       <input type='integer' class="hidden" name="value">
     <input type ="submit" value="Add Points">
     </div>
   <% end %>
-  <div class="thing hidden"> <%= pie_chart @daychart %> </div>
-</div>
+  <!-- <div class="entries hidden"> <%= pie_chart @daychart %> </div> -->
 <%= pie_chart @daychart %>
 <%= pie_chart @chart %>
-<%= pie_chart @user.entries.group(:bg).count %>
+<%= pie_chart @user.entries.group_by_hour(:created_at).count %>
   <%= scatter_chart @user.entries.pluck(:created_at, :bg), xtitle: "Time", ytitle: "Blood Glucose" %>
 
-  <%= line_chart @user.entries.group_by_day(:created_at, format: "%l %P").count%>
+  <%= line_chart @user.entries.group_by_hour(:created_at).count%>
   <% @bgs.each do |entry| %>
-    <%= entry.bg %>
+    <% entry.bg %>
   <% end %>
