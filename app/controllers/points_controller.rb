@@ -7,11 +7,15 @@ class PointsController < ApplicationController
       if params[:file]
         @data = params[:file].tempfile
       end
+      total=0
+      lines=0
       if @data
         @data.drop(1).each do |line| 
           puts "Line: "
           p line  
-          x=line.split(';') 
+          x=line.split(';')
+          total+=x[2].to_i
+          lines+=1
           time = ((x[0] + " " + x[1]).to_time)
           if @user.entries.length==0 || @user.entries[-1].created_at < Time.now-24.hours
             if time+24.hours >= Time.now 
@@ -19,6 +23,7 @@ class PointsController < ApplicationController
             end 
           end
         end 
+        @a1c=total/lines
       end 
       @bgs = @user.entries.where(created_at: (Time.now - 24.hours)..Time.now)
       if @bgs.length != 0 

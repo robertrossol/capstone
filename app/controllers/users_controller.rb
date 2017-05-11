@@ -20,6 +20,15 @@ class UsersController < ApplicationController
     @chart[:low]=low
     @chart[:med]=med
     @chart[:high]=high
+    if @user.entries.length != 0
+      @total_bg = 0
+      @user.entries.where(created_at: (Time.now - 30.days)..Time.now).each do |entry|
+        @total_bg+= entry.bg
+      end
+      @number=@user.entries.length
+      @avgbg = @total_bg/@number
+      @a1c = (((46.7 + @avgbg) / 28.7).round(1))
+    end
     render 'show.html.erb'
   end
 
