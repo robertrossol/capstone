@@ -17,7 +17,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <div class="row">
-                                    <div class="col-xs-3">
+                                    <div class="col-xs-3" >
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
@@ -39,7 +39,7 @@
                                         <div class="huge">Points: <%= @user.total_points(@user) %></div>
                                         <div>Points To Next Level: <%= @user.points_left %></div>
                                         <div class="progress">
-                                          <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= @user.progress%>%"><span class="sr-only">60% Complete</span>
+                                          <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= @user.progress%>%"><span class="sr-only"></span>
                                           </div>
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@
                     <div class="col-lg-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Blood Sugar Values from the most recently input 24 Hours</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Blood Sugar Values from the most recently input 24 Hours (<%= @user.points[-1].created_at.strftime("%A, %b %d") %>)</h3>
                             </div>
                             <div class="panel-body">
                                 <div>
@@ -103,17 +103,26 @@
                     </div>
                     <div class="col-lg-3">
                         <div class="panel panel-default">
+                          <% if @user.points[-1].created_at > (Time.now - 24.hours) %>
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Daily Results</h3>
                             </div>
                             <div class="panel-body">
-                                <div>
-                                  <%= pie_chart @daychart, {height: "250px", width: "100%"}%>
-                                </div>
+                              <div>
+                                <%= pie_chart @daychart, {height: "250px", width: "100%"}%>
+                              </div>
                             </div>
+                          <% else %>
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>All Time Results</h3>
+                            </div>
+                            <div class="panel-body">
+                              <div>
+                                <%= pie_chart @chart, {height: "250px", width: "100%"}%>
+                              </div>
+                            </div>
+                          <% end %>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
@@ -130,6 +139,8 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-lg-3">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div>
@@ -320,7 +331,6 @@
 <%= pie_chart @daychart %>
 <%= pie_chart @chart %>
 <%= pie_chart @user.entries.group_by_hour(:created_at).count %>
-<%= line_chart @user.entries.group_by_minute(:created_at, last: 100).maximum(:bg)%>
 
 <%= line_chart @daily_chart_data, 
 {height: "400px", library: {hAxis: {title: ""}, 

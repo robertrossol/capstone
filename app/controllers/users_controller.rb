@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     @bgs = @user.entries.where(created_at: (now - 24.hours)..Time.now)
     @most_recent = @user.entries.where(created_at: (@user.entries[-1].created_at - 24.hours)..@user.entries[-1].created_at)
     @daily_chart_data=Hash[(@most_recent.map(&:created_at)).zip @most_recent.map(&:bg)]
+    @all_time_data=Hash[(@user.entries.map(&:created_at)).zip @user.entries.map(&:bg)]
     @chart = {}
     @daychart = {}
     @daychart[:low]=@bgs.where("bg <= #{@user.blood_sugar_lower}").count
