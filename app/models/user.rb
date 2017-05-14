@@ -16,13 +16,13 @@ class User < ApplicationRecord
   def calc_level(user)
     @user = User.find_by(id: user.id)
     @level_up=10
-    temp_points=user.total_points(user)
+    @temp_points=user.total_points(user)
     level=user.level
     (level-1).times do
       @level_up += @level_up
     end
-    if temp_points > @level_up
-      while temp_points >= @level_up
+    if @temp_points > @level_up
+      while @temp_points >= @level_up
         level+=1
         @level_up+=@level_up
       end
@@ -35,5 +35,9 @@ class User < ApplicationRecord
 
   def points_left
     @level_up-@user.total_points(@user)
+  end
+
+  def progress
+    ((@user.total_points(@user).to_f/@level_up).to_f*100).to_i
   end
 end

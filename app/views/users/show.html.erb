@@ -26,11 +26,6 @@
                                     </div>
                                 </div>
                             </div>
-                        <!--     <h2>Email: <%= @user.email %></h2>
-                            <h2>Device ID: <%= @user.device_id %>
-                            <h2>Level: <%= @user.calc_level(@user) %></h2>
-                            <h3>Points: <%= @user.total_points(@user) %> </h3>
-                            <p>Points To Next Level: <%= @user.points_left %></p> -->
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
@@ -43,6 +38,10 @@
                                     <div class="col-xs-9 text-right">
                                         <div class="huge">Points: <%= @user.total_points(@user) %></div>
                                         <div>Points To Next Level: <%= @user.points_left %></div>
+                                        <div class="progress">
+                                          <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= @user.progress%>%"><span class="sr-only">60% Complete</span>
+                                          </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +63,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                      <% if @a1c < 7 %>
+                      <% if @a1c <= 7 %>
                         <div class="panel panel-green">
                       <% elsif @a1c >7 && @a1c < 8%>
                         <div class="panel panel-yellow">
@@ -88,13 +87,61 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Blood Sugar Values from the most recently input 24 Hours</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div>
+                                  <%= line_chart @daily_chart_data, 
+                                  {height: "250px", library: {hAxis: {title: "Time"}, 
+                                  vAxis: {title: "BG", viewWindow: {min: 40, max:350}}}} %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="morris-area-chart"></div>
+                                <div>
+                                  <%= pie_chart @daychart, {height: "250px", width: "100%"}%>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div>
+                                  <%= form_tag "/points", method: :post, multipart: true do %>
+                                    <div>
+                                      <input type="file" name="file">
+                                      <input type='integer' class="hidden" name="value">
+                                    <input type ="submit" value="Add Points">
+                                    </div>
+                                  <% end %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div>
+                                  <%= month_calendar do |date| %>
+                                    <%= date.day %>
+                                    <% @user.points.each do |entry|%>
+                                      <% if entry.created_at.day == date.day && entry.created_at.month == date.month %>
+                                        <img src="/images/thumbs_up.png" height=40%>
+                                      <% end %>
+                                    <% end %>
+                                  <% end %>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -108,7 +155,7 @@
                                 <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>  Chart</h3>
                             </div>
                             <div class="panel-body">
-                                <div><%= pie_chart @daychart %></div>
+                                <div id="morris-donut-chart"></div>
                                 <div class="text-right">
                                     <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
@@ -265,12 +312,6 @@
   <%= form_tag "/points", method: :post, multipart: true do %>
     <div>
       <input type="file" name="file">
-    </div>
-    <!-- <div>
-      BG: <input type='integer' name="bg">
-    <input type ="submit" value="Add BG">
-    </div> -->
-    <div>
       <input type='integer' class="hidden" name="value">
     <input type ="submit" value="Add Points">
     </div>
@@ -279,12 +320,12 @@
 <%= pie_chart @daychart %>
 <%= pie_chart @chart %>
 <%= pie_chart @user.entries.group_by_hour(:created_at).count %>
-  <%= scatter_chart @user.entries.pluck(:created_at, :bg), xtitle: "Time", ytitle: "Blood Glucose" %> 
-  <%= line_chart @user.entries.group_by_hour(:created_at).count%>
-  <% @bgs.each do |entry| %>
-    <% entry.bg %>
-  <% end %>
-<div id="myfirstchart" style="height: 250px;"></div>
+<%= line_chart @user.entries.group_by_minute(:created_at, last: 100).maximum(:bg)%>
+
+<%= line_chart @daily_chart_data, 
+{height: "400px", library: {hAxis: {title: ""}, 
+ vAxis: {title: "BG", viewWindow: {min: 40, max:350}}}} %>
+<!-- <div id="myfirstchart" style="height: 250px;"></div>
 <script>
 new Morris.Line({
   element: 'myfirstchart',
@@ -301,8 +342,8 @@ new Morris.Line({
 });
 </script>
 </div>
-data=[]
+ --><!-- data=[]
 @user.entries.each do |entry|
   point={time: 'entry.created_at', BG: 'entry.bg'}
   data<<point
-end
+end -->

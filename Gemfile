@@ -21,6 +21,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
+gem "simple_calendar", "~> 2.0"
 gem 'chartkick'
 gem 'groupdate', '~> 2.1.1'
 gem 'active_median', '~> 0.1.0'

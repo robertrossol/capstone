@@ -5,13 +5,13 @@ class UsersController < ApplicationController
     now = Time.now
     #@data={}
     # @data = File.open("/Users/apple/Downloads/BgData/exportCSV20170501-192317.zip","r")
-    
-
 
     low=@user.entries.where("bg < #{@user.blood_sugar_lower}").count
     med=@user.entries.where("bg > #{@user.blood_sugar_lower} and bg < #{@user.blood_sugar_upper}").count
     high=@user.entries.where("bg > #{@user.blood_sugar_upper}").count
     @bgs = @user.entries.where(created_at: (now - 24.hours)..Time.now)
+    @most_recent = @user.entries.where(created_at: (@user.entries[-1].created_at - 24.hours)..@user.entries[-1].created_at)
+    @daily_chart_data=Hash[(@most_recent.map(&:created_at)).zip @most_recent.map(&:bg)]
     @chart = {}
     @daychart = {}
     @daychart[:low]=@bgs.where("bg <= #{@user.blood_sugar_lower}").count

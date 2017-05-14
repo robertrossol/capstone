@@ -18,8 +18,8 @@ $(function() {
         }, {
             period: '2010 Q3',
             iphone: 4912,
-            ipad: 1969,
-            itouch: 2501
+            ipad: 300,
+            itouch: 200
         }, {
             period: '2010 Q4',
             iphone: 3767,
