@@ -1,78 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>SB Admin - Bootstrap Admin Template</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
-  
-    <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
-
-</body>
-
-</html>
-
+<h2>" "</h2>
 <h1>Signup!</h1>
 <%= form_tag '/users', method: :post do  %>
-  <div>
-    Username: <input type="text" name="username">
+  <div class="form-group">
+    <label for="username">Username:</label>
+    <input type="text" class="form-control" name="username">
   </div>
-  <div>
-    Email: <input type="email" name="email">
+  <div class="form-group">
+    <label for="email">Email address:</label>
+    <input type="email" class="form-control" name="email">
   </div>
-  <div>
-    Device ID: <input type="text" name="device_id">
+  <div class="form-group">
+    <label for="device_id">Device ID:</label>
+    <input type="text" class="form-control" name="device_id">
   </div>
-  <div>
-    Blood Sugar Lower Bound: <input type="text" name="blood_sugar_lower">
+  <div class="form-group">
+    <label for="blood_sugar_lower">Blood Sugar Lower Bound:</label>
+    <input type="int" class="form-control" name="blood_sugar_lower">
   </div>
-  <div>
-    Blood Sugar Upper Bound: <input type="text" name="blood_sugar_upper">
+  <div class="form-group">
+    <label for="blood_sugar_upper">Blood Sugar Upper Bound:</label>
+    <input type="int" class="form-control" name="blood_sugar_upper">
   </div>
-  <div>
-    Password: <input type="password" name="password">
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" class="form-control" name="password">
   </div>
-  <div>
-    Confirm Password: <input type="password" name="password_confirmation">
-  </div>
-  <input type="submit" value="Submit">
+  <button type="submit" value="Submit" class="btn btn-default">Submit</button>
 <% end %>
