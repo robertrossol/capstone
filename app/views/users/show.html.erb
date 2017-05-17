@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"> 
+<h3>" "</h3>
  <div id="page-wrapper">
 
             <div class="container-fluid">
@@ -102,6 +103,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Spend Points</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div>
+                                  <h3><a href="/users/<%=@user.id%>/spend">Spend your points on new Icons and Backgrounds!</a></h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="panel panel-default">
@@ -127,7 +138,7 @@
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Import Daily Data</h3>
                             </div>
                             <div class="panel-body">
                                 <div>
@@ -150,7 +161,7 @@
                                     <%= date.day %>
                                     <% @user.points.each do |entry|%>
                                       <% if entry.created_at.day == date.day && entry.created_at.month == date.month %>
-                                        <img src="/images/thumbs_up.png" height=40%>
+                                        <img src="/images/<%=@user.icon%>" height=40%>
                                       <% end %>
                                     <% end %>
                                   <% end %>
@@ -165,7 +176,7 @@
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">Donut
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>  Chart</h3>
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>Chart</h3>
                             </div>
                             <div class="panel-body">
                                 <div id="morris-donut-chart"></div>
@@ -294,6 +305,20 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div>
+                      <a href="/users/<%=@user.id%>"><img src="/images/smily.png" alt=""></a>
+                      <%= form_tag "/users/#{@user.id}", method: :patch do %>
+                        <div>
+                          <input type="text" class="form-control" name="form_icon">
+                          <input type ="submit" value="Update Icon">
+                        </div>
+                      <% end %>
+                      <button>pick this icon</button>
+                    </div>
+                    <div>
+                      <a href="/users/<%=@user.id%>"><img src="/images/thumbs_up.png" alt=""></a>
+                      <button>pick this icon</button>
                     </div>
                 </div>
                 <!-- /.row -->

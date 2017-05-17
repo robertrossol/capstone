@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     low=@user.entries.where("bg < #{@user.blood_sugar_lower}").count
     med=@user.entries.where("bg > #{@user.blood_sugar_lower} and bg < #{@user.blood_sugar_upper}").count
     high=@user.entries.where("bg > #{@user.blood_sugar_upper}").count
-    @bgs = @user.entries.where(created_at: (now - 24.hours)..Time.now)
+    @bgs = @user.entries.where(created_at: (@user.entries[-1].created_at - 24.hours)..@user.entries[-1].created_at)
     @most_recent = @user.entries.where(created_at: (@user.entries[-1].created_at - 24.hours)..@user.entries[-1].created_at)
     @daily_chart_data=Hash[(@most_recent.map(&:created_at)).zip @most_recent.map(&:bg)]
     @all_time_data=Hash[(@user.entries.map(&:created_at)).zip @user.entries.map(&:bg)]
@@ -57,4 +57,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find_by(id: params[:id])
+    if @user.update(
+    icon: params[:form_icon]
+    )
+      redirect_to "/users/#{@user.id}"
+    end
+  end
+
+  def spend
+    @user = User.find_by(id: params[:id])
+    render "spend.html.erb"
+  end
 end

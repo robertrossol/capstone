@@ -24,7 +24,10 @@ body {
 #page-wrapper {
     width: 100%;
     padding: 0;
-    background-color: #fff;
+    /*background-image: url("/backgrounds/338216-background-image.jpg");*/
+    /*background-color: #fff;*/
+    background: url('/backgrounds/338216-background-image.jpg') no-repeat center center fixed; 
+    background-size: cover;
 }
 
 .huge {

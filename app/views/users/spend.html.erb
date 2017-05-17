@@ -1,0 +1,26 @@
+<h1>""</h1>
+<h1>Hello World</h1>
+<% Dir.foreach('/Users/apple/Actualize/Capstone/public/images/') do |item| %>
+  <%next if item == '.' or item == '..'%>
+  <div class="col-lg-3 col-md-6">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3" >
+                    <img src="/images/<%= item %>" alt="" width=100%>
+                    <%= form_tag "/users/#{@user.id}", method: :patch do %>
+                      <div>
+                        <input type="text" class="form-control hidden" name="form_icon" value="<%= item %>">
+                        <input type ="submit" value="Update Icon">
+                      </div>
+                    <% end %>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <div class="huge"><%=item%></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+<% end %>
