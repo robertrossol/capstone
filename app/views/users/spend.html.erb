@@ -1,23 +1,98 @@
 <h1>""</h1>
-<h1>Hello World</h1>
+<h1>Icons: Level 1</h1>
 <% Dir.foreach('/Users/apple/Actualize/Capstone/public/images/') do |item| %>
-  <%next if item == '.' or item == '..'%>
-  <div class="col-lg-3 col-md-6">
+  <%next if item == '.' or item == '..' or item[0] == '.'%>
+  <div class="col-lg-1">
     <div class="panel panel-primary">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-xs-3" >
-                    <img src="/images/<%= item %>" alt="" width=100%>
+                <div class="col-xs-12 icon">
+                    <img src="/images/<%=item %>" width=100%>
+                    <%= item %>
                     <%= form_tag "/users/#{@user.id}", method: :patch do %>
                       <div>
                         <input type="text" class="form-control hidden" name="form_icon" value="<%= item %>">
-                        <input type ="submit" value="Update Icon">
+                        <input type ="submit" value="Select">
                       </div>
                     <% end %>
                 </div>
-                <div class="col-xs-9 text-right">
-                    <div class="huge"><%=item%></div>
-                    <div></div>
+            </div>
+        </div>
+    </div>
+  </div>
+<% end %>
+<div class="row">
+</div>
+<% if @user.level >= 2 %>
+  <h1>Icons: Level 2</h1>
+  <% Dir.foreach('/Users/apple/Actualize/Capstone/public/level2/') do |item| %>
+    <%next if item == '.' or item == '..' or item[0] == '.'%>
+    <div class="col-lg-1">
+      <div class="panel panel-primary">
+          <div class="panel-heading">
+              <div class="row">
+                  <div class="col-xs-12 icon">
+                      <img src="/level2/<%=item %>" width=100%>
+                      <%= item %>
+                      <%= form_tag "/users/#{@user.id}", method: :patch do %>
+                        <div>
+                          <input type="text" class="form-control hidden" name="form_icon" value="<%= item %>">
+                          <input type ="submit" value="Select">
+                        </div>
+                      <% end %>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  <% end %>
+<%end%>
+<div class="row">
+</div>
+<% if @user.level >= 3 %>
+  <h1>Icons: Level 3</h1>
+  <% Dir.foreach('/Users/apple/Actualize/Capstone/public/level3/') do |item| %>
+    <%next if item == '.' or item == '..' or item[0] == '.'%>
+    <div class="col-lg-1">
+      <div class="panel panel-primary">
+          <div class="panel-heading">
+              <div class="row">
+                  <div class="col-xs-12 icon">
+                      <img src="/level3/<%=item %>" width=100%>
+                      <%= item %>
+                      <%= form_tag "/users/#{@user.id}", method: :patch do %>
+                        <div>
+                          <input type="text" class="form-control hidden" name="form_icon" value="<%= item %>">
+                          <input type ="submit" value="Select">
+                        </div>
+                      <% end %>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  <% end %>
+<%end%>
+
+<div class="row">
+</div>
+
+<h1>Backgrounds</h1>
+<% Dir.foreach('/Users/apple/Actualize/Capstone/public/backgrounds') do |background| %>
+  <%next if background == '.' or background == '..' or background[0] == '.'%>
+  <div class="col-lg-3">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-12 icon">
+                    <img src="/backgrounds/<%= background %>" width=100% height=90%>
+                    <!-- <%= background %> -->
+                    <%= form_tag "/users/#{@user.id}", method: :patch do %>
+                      <div>
+                        <input type="text" class="form-control" name="form_background" value="<%=background %>">
+                        <input type ="submit" value="Select">
+                      </div>
+                    <% end %>
                 </div>
             </div>
         </div>

@@ -32,6 +32,21 @@ class User < ApplicationRecord
     level
   end
 
+  def time_left
+    hours_left=0
+    @time_left=(Time.now.minus_with_coercion(@user.points[-1].created_at+24.hour))
+    minutes_left=((@time_left/60).to_i*-1)
+    if @time_left < 0
+      while minutes_left>60
+        hours_left+=1
+        minutes_left-60
+      end
+      hours_left.to_s + " hour(s) and " + minutes_left.to_s + " minutes left"
+    else
+      "Time to Enter Your Data!"
+    end
+  end
+
 
   def points_left
     @level_up-@user.total_points(@user)

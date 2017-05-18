@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-green">
+                        <div class="panel panel-yellow">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
@@ -109,7 +109,7 @@
                             </div>
                             <div class="panel-body">
                                 <div>
-                                  <h3><a href="/users/<%=@user.id%>/spend">Spend your points on new Icons and Backgrounds!</a></h3>
+                                  <h3><a href="/users/<%=@user.id%>/spend">Check Your Level Rewards! Bonus Icons and Backgrounds!</a></h3>
                                 </div>
                             </div>
                         </div>
@@ -146,7 +146,8 @@
                                     <div>
                                       <input type="file" name="file">
                                       <input type='integer' class="hidden" name="value">
-                                    <input type ="submit" value="Add Points">
+                                      <input type ="submit" value="Add Points">
+                                      <div><%= @user.time_left %></div>
                                     </div>
                                   <% end %>
                                 </div>
@@ -173,19 +174,7 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <div class="col-lg-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Donut
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>Chart</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-donut-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -195,7 +184,7 @@
                                 <div class="list-group">
                                     <a href="#" class="list-group-item">
                                         <span class="badge">just now</span>
-                                        <i class="fa fa-fw fa-calendar"></i> Calendar updated
+                                        <i class="fa fa-fw fa-calendar"></i>
                                     </a>
                                     <a href="#" class="list-group-item">
                                         <span class="badge">4 minutes ago</span>

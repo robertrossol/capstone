@@ -10,9 +10,7 @@ class PointsController < ApplicationController
       total=0
       lines=0
       if @data
-        @data.drop(1).each do |line| 
-          puts "Line: "
-          p line  
+        @data.drop(1).each do |line|  
           x=line.split(';')
           total+=x[2].to_i
           lines+=1
