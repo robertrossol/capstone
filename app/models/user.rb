@@ -39,7 +39,7 @@ class User < ApplicationRecord
     if @time_left < 0
       while minutes_left>60
         hours_left+=1
-        minutes_left-60
+        minutes_left-=60
       end
       hours_left.to_s + " hour(s) and " + minutes_left.to_s + " minutes left"
     else

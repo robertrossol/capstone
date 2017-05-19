@@ -6,9 +6,11 @@
 
 /* Global Styles */
 
+
 body {
     margin-top: 100px;
-    background-color: #222;
+    background-color: #fff;
+    padding-top: 50px;
 }
 
 @media(min-width:768px) {
@@ -24,9 +26,7 @@ body {
 #page-wrapper {
     width: 100%;
     padding: 0;
-    /*background-image: url("/backgrounds/338216-background-image.jpg");*/
-    /*background-color: #fff;*/
-    background-image: url(/backgrounds/@user.background) no-repeat center center fixed; 
+    background-image: url(<%= @user ? @user.background : '338216-background-image.jpg' %>)no-repeat fixed center; 
     background-size: cover;
 }
 

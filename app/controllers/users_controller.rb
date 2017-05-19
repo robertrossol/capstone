@@ -2,28 +2,28 @@ class UsersController < ApplicationController
   def show
     user_id = params[:id]
     @user = User.find_by(id: user_id)
-    now = Time.now
+    now = Time.zone.now
     #@data={}
     # @data = File.open("/Users/apple/Downloads/BgData/exportCSV20170501-192317.zip","r")
 
     low=@user.entries.where("bg < #{@user.blood_sugar_lower}").count
     med=@user.entries.where("bg > #{@user.blood_sugar_lower} and bg < #{@user.blood_sugar_upper}").count
     high=@user.entries.where("bg > #{@user.blood_sugar_upper}").count
-    @bgs = @user.entries.where(created_at: (now - 24.hours)..Time.now)
+    @bgs = @user.entries.where(created_at: (now - 24.hours)..Time.zone.now)
     @most_recent = @user.entries.where(created_at: (@user.entries[-1].created_at - 24.hours)..@user.entries[-1].created_at)
     @daily_chart_data=Hash[(@most_recent.map(&:created_at)).zip @most_recent.map(&:bg)]
     @all_time_data=Hash[(@user.entries.map(&:created_at)).zip @user.entries.map(&:bg)]
     @chart = {}
     @daychart = {}
-    @daychart[:low]=@bgs.where("bg <= #{@user.blood_sugar_lower}").count
-    @daychart[:med]=@bgs.where("bg > #{@user.blood_sugar_lower} and bg < #{@user.blood_sugar_upper}").count
-    @daychart[:high]=@bgs.where("bg >= #{@user.blood_sugar_upper}").count
+    @daychart[:low]=@most_recent.where("bg <= #{@user.blood_sugar_lower}").count
+    @daychart[:med]=@most_recent.where("bg > #{@user.blood_sugar_lower} and bg < #{@user.blood_sugar_upper}").count
+    @daychart[:high]=@most_recent.where("bg >= #{@user.blood_sugar_upper}").count
     @chart[:low]=low
     @chart[:med]=med
     @chart[:high]=high
     if @user.entries.length != 0
       @total_bg = 0
-      @user.entries.where(created_at: (Time.now - 30.days)..Time.now).each do |entry|
+      @user.entries.where(created_at: (Time.zone.now - 30.days)..Time.zone.now).each do |entry|
         @total_bg+= entry.bg
       end
       @number=@user.entries.length

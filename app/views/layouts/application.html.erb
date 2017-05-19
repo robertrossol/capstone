@@ -175,7 +175,7 @@
     <script src="/js/plugins/morris/morris.min.js"></script>
     <script src="/js/plugins/morris/morris-data.js"></script>
     <% flash.each do |name, message| %>
-      <div><%= message %></div>
+        <div class="alert alert-<%=name%>"><%= message %></div>
     <% end %>
     <%= yield %>
 </body>

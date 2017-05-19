@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   
+  get "/users/:id" => "users#show"
   get "/signup" => "users#new"
   post "/users" => "users#create"
-  get "users/:id/spend" => "users#spend"
-  get "/users/:id" => "users#show"
   patch "/users/:id" => "users#update"
+  get "users/:id/spend" => "users#spend"
+
+
 
   get "/login" => "sessions#new"
   post "/login" => "sessions#create"

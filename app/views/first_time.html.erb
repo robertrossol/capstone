@@ -1,0 +1,13 @@
+<div>
+  <h2>""</h2>
+  <h1>Final Step! Please submit your data</h1>
+</div>
+<div>
+  <%= form_tag "/points", method: :post, multipart: true do %>
+    <div>
+      <input type="file" name="file">
+      <input type='integer' class="hidden" name="value">
+    <input type ="submit" value="Submit">
+    </div>
+  <% end %>
+</div>

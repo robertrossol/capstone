@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"> 
-<h3>" "</h3>
- <div id="page-wrapper">
+ <div id="page-wrapper" style="background-image: url(<%= @user ? @user.background : '0.jpg' %>); ">
 
             <div class="container-fluid">
 
@@ -89,7 +88,7 @@
                 </div>
                 <!-- /.row -->
 
-                <div class="row">
+                <div class="row" style=opacity:0.8;>
                     <div class="col-lg-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -103,9 +102,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel panel-default">
+                        <div class="panel panel-default" style=opacity:0.9;>
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Spend Points</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Rewards!</h3>
                             </div>
                             <div class="panel-body">
                                 <div>
@@ -162,7 +161,7 @@
                                     <%= date.day %>
                                     <% @user.points.each do |entry|%>
                                       <% if entry.created_at.day == date.day && entry.created_at.month == date.month %>
-                                        <img src="/images/<%=@user.icon%>" height=40%>
+                                        <img src="<%=@user.icon%>" height=40%>
                                       <% end %>
                                     <% end %>
                                   <% end %>
@@ -295,20 +294,7 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                      <a href="/users/<%=@user.id%>"><img src="/images/smily.png" alt=""></a>
-                      <%= form_tag "/users/#{@user.id}", method: :patch do %>
-                        <div>
-                          <input type="text" class="form-control" name="form_icon">
-                          <input type ="submit" value="Update Icon">
-                        </div>
-                      <% end %>
-                      <button>pick this icon</button>
-                    </div>
-                    <div>
-                      <a href="/users/<%=@user.id%>"><img src="/images/thumbs_up.png" alt=""></a>
-                      <button>pick this icon</button>
-                    </div>
+                    
                 </div>
                 <!-- /.row -->
 
@@ -316,6 +302,7 @@
             <!-- /.container-fluid -->
 
         </div>
+<div class='hidden'>
   <h1><%= @user.username%>'s Page</h1>
   <h2>Email: <%= @user.email %></h2>
   <h2>Device ID: <%= @user.device_id %>
@@ -373,3 +360,5 @@ new Morris.Line({
   point={time: 'entry.created_at', BG: 'entry.bg'}
   data<<point
 end -->
+
+</div>
