@@ -55,4 +55,23 @@ class User < ApplicationRecord
   def progress
     ((@user.total_points(@user).to_f/@level_up).to_f*100).to_i
   end
+
+  def avgbg(time)
+    total_bg = 0
+    @user.entries.where(created_at: (Time.zone.now - time.days)..Time.zone.now).each do |entry|
+      total_bg+= entry.bg
+    end
+    number=@user.entries.length
+    total_bg/number
+  end
+
+  def daysinrow
+    position=-1
+    consecutive_days=0
+    while @user.points[position] && @user.points[position].created_at.day == Time.zone.now.day-consecutive_days 
+      consecutive_days+=1
+      position-=1
+    end
+    consecutive_days
+  end
 end

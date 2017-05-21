@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-red">
+                        <div class="panel panel-green">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
@@ -90,7 +90,7 @@
 
                 <div class="row" style=opacity:0.8;>
                     <div class="col-lg-6">
-                        <div class="panel panel-default">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-line-chart fa-fw"></i> Blood Sugar Values from the most recently input 24 Hours (<%= @user.points[-1].created_at.strftime("%A, %b %d") %>)</h3>
                             </div>
@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel panel-default" style=opacity:0.9;>
+                        <div class="panel panel-green" style=opacity:0.9;>
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Rewards!</h3>
                             </div>
@@ -114,7 +114,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="panel panel-default">
+                        <div class="panel panel-red">
                           <% if @user.points[-1].created_at > (Time.now - 24.hours) %>
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i>Daily Results</h3>
@@ -135,33 +135,53 @@
                             </div>
                           <% end %>
                         </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Import Daily Data</h3>
+                      <% if (Time.zone.now.minus_with_coercion(@user.points[-1].created_at+24.hour))<0 %>
+                        <div class="panel panel-primary">
+                          <div class="panel-heading">
+                            <div class="row">
+                              <div class="col-xs-3">
+                                <i class="fa fa-calendar fa-5x"></i>
+                              </div>
+                              <div class="col-xs-9 text-right">
+                                <h3>You've Logged <%= @user.daysinrow %> Days in a Row!</h3>
+                              </div>
                             </div>
-                            <div class="panel-body">
-                                <div>
-                                  <%= form_tag "/points", method: :post, multipart: true do %>
-                                    <div>
-                                      <input type="file" name="file">
-                                      <input type='integer' class="hidden" name="value">
-                                      <input type ="submit" value="Add Points">
-                                      <div><%= @user.time_left %></div>
-                                    </div>
-                                  <% end %>
-                                </div>
-                            </div>
+                          </div>
                         </div>
+                      <%else%>
+                        <div class="panel panel-primary">
+                          <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Import Data!</h3>
+                          </div>
+                          <div class="panel-body">
+                            <div>
+                              <%= form_tag "/points", method: :post, multipart: true do %>
+                                <div>
+                                  <input type="file" name="file">
+                                  <input type='integer' class="hidden" name="value">
+                                  <input type ="submit" value="Add Points">
+                                  <div><%= @user.time_left %></div>
+                                </div>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
+                      <% end %>
                     </div>
                     <div class="col-lg-3">
-                        <div class="panel panel-default">
+                        <div class="panel panel-primary">
+                          <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-calendar fa-fw"></i>Days Tracked</h3>
+                          </div>
                             <div class="panel-body">
                                 <div>
+                                  <% days_logged = 0 %>
                                   <%= month_calendar do |date| %>
                                     <%= date.day %>
                                     <% @user.points.each do |entry|%>
                                       <% if entry.created_at.day == date.day && entry.created_at.month == date.month %>
                                         <img src="<%=@user.icon%>" height=40%>
+                                        <% days_logged += 1 %>
                                       <% end %>
                                     <% end %>
                                   <% end %>
@@ -177,25 +197,31 @@
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Tasks Panel</h3>
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> User Stats</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="list-group">
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">just now</span>
-                                        <i class="fa fa-fw fa-calendar"></i>
+                                        <span class="badge"><%= @user.points[-1].value%> Points</span>
+                                        <i class="fa fa-fw fa-calendar"></i> Most Recent Point Entry
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">4 minutes ago</span>
-                                        <i class="fa fa-fw fa-comment"></i> Commented on a post
+                                        <span class="badge"><%= @user.avgbg(7)%> mg/dl</span>
+                                        <i class="fa fa-fw fa-line-chart"></i> Average over the last 7 days
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">23 minutes ago</span>
-                                        <i class="fa fa-fw fa-truck"></i> Order 392 shipped
+                                        <span class="badge"><%= days_logged %></span>
+                                        <i class="fa fa-fw fa-truck"></i> Days Logged This Month
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">46 minutes ago</span>
-                                        <i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
+                                      <% entry = @user.points.order('value desc') %>
+                                      <% if entry[0].value == 10 %>
+                                        <span class="badge"> 100% in range on <%= entry[0].created_at.strftime("%A, %b %d")%></span>
+                                        <i class="fa fa-fw fa-money"></i> Best Day Ever
+                                      <% else %>
+                                        <span class="badge"> Over <%= entry[0].value%>0% in range on  <%= entry[0].created_at.strftime("%A, %b %d")%></span>
+                                          <i class="fa fa-fw fa-money"></i> Best Day Ever
+                                      <% end %>
                                     </a>
                                     <a href="#" class="list-group-item">
                                         <span class="badge">1 hour ago</span>
@@ -221,78 +247,69 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="panel panel-default">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i>All Time Results</h3>
+                        </div>
+                        <div class="panel-body">
+                          <div>
+                            <%= pie_chart @chart, {height: "250px", width: "100%"}%>
+                          </div>
+                        </div>
+                      </div>
+                        <div class="panel panel-yellow">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> Transactions Panel</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Order #</th>
-                                                <th>Order Date</th>
-                                                <th>Order Time</th>
-                                                <th>Amount (USD)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>3326</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:29 PM</td>
-                                                <td>$321.33</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3325</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:20 PM</td>
-                                                <td>$234.34</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3324</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:03 PM</td>
-                                                <td>$724.17</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3323</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:00 PM</td>
-                                                <td>$23.71</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3322</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:49 PM</td>
-                                                <td>$8345.23</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3321</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:23 PM</td>
-                                                <td>$245.12</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3320</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:15 PM</td>
-                                                <td>$5663.54</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3319</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:13 PM</td>
-                                                <td>$943.45</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-calendar fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">DaysTracked: <%= @user.points.count %></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                      </div>
+                    <div class="col-lg-4">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-user fa-fw"></i>Top Users</h3>
+                        </div>
+                        <div class="panel-body">
+                          <div class="table-responsive">
+                              <table class="table table-bordered table-hover table-striped">
+                                  <thead>
+                                      <tr>
+                                          <th>Username</th>
+                                          <th>Level</th>
+                                          <th>Points</th>
+                                          <th>Icon of Choice</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <% users = User.all.order('level desc') %>
+                                    <% x=0 %>
+                                    <% 7.times do %>
+                                      <tr>
+                                        <% if users[x] == @user %>
+                                          <td>"YOU!!"</td>
+                                        <% else %>
+                                          <td><%= users[x].username %></td>
+                                        <% end %>
+                                        <td><%= users[x].level %></td>
+                                        <td><%= users[x].total_points(users[x]) %></td>
+                                        <td><img src="<%= users[x].icon %>" height=25px></td>
+                                      </tr>
+                                      <% x+=1 %>
+                                    <%end%>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="text-right">
+                              <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     
                 </div>
