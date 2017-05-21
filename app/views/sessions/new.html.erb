@@ -1,10 +1,55 @@
-<h1>Login</h1>
-<%= form_tag "/login", method: :post do %>
-  <div>
-    Email: <input type="email" name="email">
+<div class="col-lg-3 col-md-6">      
+  <div class="row">
+    <h1>Login</h1>
+      <%= form_tag "/login", method: :post do %>
+      <div class="form-group">
+        <label for="email">Email: </label>
+        <input type="email" class="form-control" name="email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password: </label>
+        <input type="password" class="form-control" name="password">
+      </div>
+      <button type="submit" value="Log In" class="btn btn-default">Log In</button>
+      <% end %>
   </div>
-  <div>
-    Password: <input type="password" name="password">
+</div>
+<div class="col-lg-5">
+</div>
+<div class="col-lg-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-user fa-fw"></i>Top Users</h3>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+          <table class="table table-bordered table-hover table-striped">
+              <thead>
+                  <tr>
+                      <th>Username</th>
+                      <th>Level</th>
+                      <th>Points</th>
+                      <th>Icon of Choice</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% users = User.all.order('level desc') %>
+                <% x=0 %>
+                <% 10.times do %>
+                  <tr>
+                    <td><%= users[x].username %></td>
+                    <td><%= users[x].level %></td>
+                    <td><%= users[x].total_points(users[x]) %></td>
+                    <td><img src="<%= users[x].icon %>" height=25px></td>
+                  </tr>
+                  <% x+=1 %>
+                <%end%>
+              </tbody>
+          </table>
+      </div>
+      <div class="text-right">
+          <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
   </div>
-  <input type="submit" value="Log In">
-<% end %>
+</div>

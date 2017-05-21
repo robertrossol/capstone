@@ -20,7 +20,7 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3" >
-                                        <i class="fa fa-comments fa-5x"></i>
+                                        <i class="fa fa-user fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <div class="huge">Level:<%= @user.calc_level(@user) %></div>
@@ -35,7 +35,7 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
-                                        <i class="fa fa-tasks fa-5x"></i>
+                                        <i class="fa fa-gamepad fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <div class="huge">Points: <%= @user.total_points(@user) %></div>
@@ -54,7 +54,7 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
-                                        <i class="fa fa-shopping-cart fa-5x"></i>
+                                        <i class="fa fa-line-chart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <div class="huge">AVG:  <%= @avgbg %></div>
@@ -75,7 +75,7 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
-                                        <i class="fa fa-support fa-5x"></i>
+                                        <i class="fa fa-heart-o fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <div class="huge">A1c: <%= @a1c %></div>
@@ -92,7 +92,7 @@
                     <div class="col-lg-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Blood Sugar Values from the most recently input 24 Hours (<%= @user.points[-1].created_at.strftime("%A, %b %d") %>)</h3>
+                                <h3 class="panel-title"><i class="fa fa-line-chart fa-fw"></i> Blood Sugar Values from the most recently input 24 Hours (<%= @user.points[-1].created_at.strftime("%A, %b %d") %>)</h3>
                             </div>
                             <div class="panel-body">
                                 <div>
@@ -117,7 +117,7 @@
                         <div class="panel panel-default">
                           <% if @user.points[-1].created_at > (Time.now - 24.hours) %>
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Daily Results</h3>
+                                <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i>Daily Results</h3>
                             </div>
                             <div class="panel-body">
                               <div>
@@ -126,7 +126,7 @@
                             </div>
                           <% else %>
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>All Time Results</h3>
+                                <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i>All Time Results</h3>
                             </div>
                             <div class="panel-body">
                               <div>

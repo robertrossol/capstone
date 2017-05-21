@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20170517022903) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.integer  "level",             default: 1
-    t.string   "icon",              default: "smily.png"
+    t.string   "icon",              default: "/images/smily.png"
     t.string   "background"
   end
 

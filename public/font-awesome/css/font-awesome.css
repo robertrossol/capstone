@@ -175,6 +175,10 @@
 .fa-envelope-o:before {
   content: "\f003";
 }
+
+.fa-heartbeat:before {
+  content: "\f21e";
+}
 .fa-heart:before {
   content: "\f004";
 }

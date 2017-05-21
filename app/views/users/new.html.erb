@@ -1,28 +1,30 @@
-<h1>Signup!</h1>
-<%= form_tag '/users', method: :post do  %>
-  <div class="form-group">
-    <label for="username">Username:</label>
-    <input type="tex`t" class="form-control" name="username">
-  </div>
-  <div class="form-group">
-    <label for="email">Email address:</label>
-    <input type="email" class="form-control" name="email">
-  </div>
-  <div class="form-group">
-    <label for="device_id">Device ID:</label>
-    <input type="text" class="form-control" name="device_id">
-  </div>
-  <div class="form-group">
-    <label for="blood_sugar_lower">Blood Sugar Lower Bound:</label>
-    <input type="int" class="form-control" name="blood_sugar_lower">
-  </div>
-  <div class="form-group">
-    <label for="blood_sugar_upper">Blood Sugar Upper Bound:</label>
-    <input type="int" class="form-control" name="blood_sugar_upper">
-  </div>
-  <div class="form-group">
-    <label for="password">Password:</label>
-    <input type="password" class="form-control" name="password">
-  </div>
-  <button type="submit" value="Submit" class="btn btn-default">Submit</button>
-<% end %>
+<div class="col-lg-3 col-md-6">
+  <h1>Signup!</h1>
+  <%= form_tag '/users', method: :post do  %>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" name="username">
+    </div>
+    <div class="form-group">
+      <label for="email">Email address:</label>
+      <input type="email" class="form-control" name="email">
+    </div>
+    <div class="form-group hidden">
+      <label for="device_id">Device ID:</label>
+      <input type="text" class="form-control" name="device_id" value="SM87361092">
+    </div>
+    <div class="form-group">
+      <label for="blood_sugar_lower">Blood Sugar Lower Bound:</label>
+      <input type="int" class="form-control" name="blood_sugar_lower">
+    </div>
+    <div class="form-group">
+      <label for="blood_sugar_upper">Blood Sugar Upper Bound:</label>
+      <input type="int" class="form-control" name="blood_sugar_upper">
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" name="password">
+    </div>
+    <button type="submit" value="Submit" class="btn btn-default">Submit</button>
+  <% end %>
+</div>
