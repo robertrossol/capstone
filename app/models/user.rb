@@ -58,10 +58,11 @@ class User < ApplicationRecord
 
   def avgbg(time)
     total_bg = 0
-    @user.entries.where(created_at: (Time.zone.now - time.days)..Time.zone.now).each do |entry|
+    applicable_entries = @user.entries.where(created_at: (Time.zone.now - time.days)..Time.zone.now)
+    applicable_entries.each do |entry|
       total_bg+= entry.bg
     end
-    number=@user.entries.length
+    number = applicable_entries.length
     total_bg/number
   end
 
@@ -74,4 +75,5 @@ class User < ApplicationRecord
     end
     consecutive_days
   end
+
 end

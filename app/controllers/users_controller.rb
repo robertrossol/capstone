@@ -66,7 +66,6 @@ class UsersController < ApplicationController
       redirect_to "/users/#{@user.id}"
     end
   end
-
   def spend
     @user = User.find_by(id: params[:id])
     render "spend.html.erb"

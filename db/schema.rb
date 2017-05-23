@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170521153928) do
+ActiveRecord::Schema.define(version: 20170523005046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,11 +36,11 @@ ActiveRecord::Schema.define(version: 20170521153928) do
     t.string   "device_id"
     t.integer  "blood_sugar_lower"
     t.integer  "blood_sugar_upper"
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
     t.integer  "level",             default: 1
     t.string   "icon",              default: "/images/smily.png"
-    t.string   "background"
+    t.string   "background",        default: "/backgrounds/01.jpg"
   end
 
 end

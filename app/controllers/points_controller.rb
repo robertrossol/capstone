@@ -2,7 +2,7 @@
 class PointsController < ApplicationController
   def create
     current_time = Time.zone.now
-    
+
     if current_user
       @user = current_user
       # @data = File.open("/Users/apple/Downloads/export20170503-180101.csv","r")
@@ -35,6 +35,7 @@ class PointsController < ApplicationController
           value: (@daychart[:med].to_f/@bgs.count)*10,
           user_id: current_user.id
           )
+
         if @user.points.length == 0 || @user.points[-1].created_at < current_time-24.hours
           point.save
           flash[:success] = 'Points Added Successfully'

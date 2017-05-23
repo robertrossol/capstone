@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   
   get "/users/:id" => "users#show"
   get "/signup" => "users#new"
+  get "/users" => "users#index"
   post "/users" => "users#create"
   patch "/users/:id" => "users#update"
   get "users/:id/spend" => "users#spend"
