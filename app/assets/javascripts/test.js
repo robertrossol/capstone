@@ -31,3 +31,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 
+
+
+$(document).ready(function() {
+    $('#logged_trophy').hover(function() {
+        $('#logged_trophy_popup').show();
+    }, function() {
+        $('#logged_trophy_popup').hide();
+    });
+});
+
+$(document).ready(function() {
+    $('#best_day_trophy').hover(function() {
+        $('#best_day_trophy_popup').show();
+    }, function() {
+        $('#best_day_trophy_popup').hide();
+    });
+});
+

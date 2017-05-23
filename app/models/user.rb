@@ -76,4 +76,24 @@ class User < ApplicationRecord
     consecutive_days
   end
 
+  def days_logged
+    @days_logged=0
+    month=Time.zone.now.strftime("%m").to_i
+    from_date = Date.new(2017, month, 1)
+    to_date = Date.new(2017, month, Time.zone.now.strftime("%d").to_i)
+    (from_date..to_date).each do |date|
+      @user.points.each do |entry|
+        if entry.created_at.day == date.day && entry.created_at.month == date.month 
+          @days_logged += 1 
+        end 
+      end 
+    end
+    @days_logged
+  end
+  def best_day
+    entry = @user.points.order('value desc')
+    entry[0].value.to_s + "0%"
+  end
+
+
 end

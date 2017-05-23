@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"> 
+<style>
+  .solid {border-style: solid; border-width: 1px;}
+</style>
  <div id="page-wrapper" style="background-image: url(<%= @user ? @user.background : '0.jpg' %>); ">
 
             <div class="container-fluid">
@@ -24,14 +27,13 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <div class="huge">Level:<%= @user.calc_level(@user) %></div>
-                                        <div></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-yellow">
+                        <div class="panel panel-green">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
@@ -49,7 +51,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-md-6 hidden">
                         <div class="panel panel-green">
                             <div class="panel-heading">
                                 <div class="row">
@@ -79,10 +81,48 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <div class="huge">A1c: <%= @a1c %></div>
-                                        <div></div>
+                                        <div class="medium">Avg BG:  <%= @avgbg %></div>
+                                        <div>(Over the Last 30 Days)</div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                            Badges
+                            </div>
+                                <div class="row">
+                                    <div class="col-xs-4" >
+                                      <% if @user.days_logged >= 14 %>
+                                        <img id='logged_trophy' src="/trophies/calendar_silver.png" alt="" width=75px>
+                                        <div id='logged_trophy_popup'>14 Days Logged This Month. Silver Level</div>
+                                      <% elsif @user.days_logged >= 7 %>
+                                        <img id='logged_trophy' src="/trophies/calendar_bronze.png" alt="" width=75px>
+                                        <div id='logged_trophy_popup'>7 Days Logged This Month. Bronze Level</div>
+                                      <% else %>
+                                        <i class="fa fa-question-circle fa-5x"></i>
+                                      <% end %>
+                                    </div>
+                                    <div class="col-xs-4" >
+                                      <% if @user.best_day == "100%" %>
+                                        <img id='best_day_trophy' src="/trophies/100.png" alt="" width=75px>
+                                        <div id='best_day_trophy_popup'>100% in Target. Gold Level</div>
+                                      <% elsif @user.best_day == "90"  %>
+                                        <img id='best_day_trophy' src="/trophies/90.png" alt="" width=75px>
+                                        <div id='best_day_trophy_popup'>90% in Target. Silver Level</div>
+                                      <% elsif @user.best_day == "80"  %>
+                                        <img id='best_day_trophy' src="/trophies/80.png" alt="" width=75px>
+                                        <div id='best_day_trophy_popup'>80% in Target. Bronze Level</div>
+                                      <% else %>
+                                        <i class="fa fa-question-circle fa-5x"></i>
+                                      <% end %>
+                                    </div>
+                                    <div class="col-xs-4" >
+                                        <i class="fa fa-question-circle fa-5x"></i>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -175,13 +215,11 @@
                           </div>
                             <div class="panel-body">
                                 <div>
-                                  <% days_logged = 0 %>
                                   <%= month_calendar do |date| %>
                                     <%= date.day %>
                                     <% @user.points.each do |entry|%>
                                       <% if entry.created_at.day == date.day && entry.created_at.month == date.month %>
                                         <img src="<%=@user.icon%>" height=40%>
-                                        <% days_logged += 1 %>
                                       <% end %>
                                     <% end %>
                                   <% end %>
@@ -210,7 +248,7 @@
                                         <i class="fa fa-fw fa-line-chart"></i> Average over the last 7 days
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge"><%= days_logged %></span>
+                                        <span class="badge"><%= @user.days_logged %></span>
                                         <i class="fa fa-fw fa-calendar"></i> Days Logged This Month
                                     </a>
                                     <a href="#" class="list-group-item">
