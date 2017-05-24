@@ -91,14 +91,14 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-green">
                             <div class="panel-heading">
-                            Badges
+                            <h3 class="panel-title"><i class="fa fa-trophy fa-fw"></i> Badges </h3>
                             </div>
                                 <div class="row">
-                                    <div class="col-xs-4" >
-                                      <% if @user.days_logged >= 14 %>
+                                    <div class="col-xs-4">
+                                      <% if @user.days_logged(@user) >= 14 %>
                                         <img id='logged_trophy' src="/trophies/calendar_silver.png" alt="" width=75px>
                                         <div id='logged_trophy_popup'>14 Days Logged This Month. Silver Level</div>
-                                      <% elsif @user.days_logged >= 7 %>
+                                      <% elsif @user.days_logged(@user) >= 7 %>
                                         <img id='logged_trophy' src="/trophies/calendar_bronze.png" alt="" width=75px>
                                         <div id='logged_trophy_popup'>7 Days Logged This Month. Bronze Level</div>
                                       <% else %>
@@ -106,13 +106,13 @@
                                       <% end %>
                                     </div>
                                     <div class="col-xs-4" >
-                                      <% if @user.best_day == "100%" %>
+                                      <% if @user.best_day(@user) == "100%" %>
                                         <img id='best_day_trophy' src="/trophies/100.png" alt="" width=75px>
                                         <div id='best_day_trophy_popup'>100% in Target. Gold Level</div>
-                                      <% elsif @user.best_day == "90"  %>
+                                      <% elsif @user.best_day(@user) == "90%"  %>
                                         <img id='best_day_trophy' src="/trophies/90.png" alt="" width=75px>
                                         <div id='best_day_trophy_popup'>90% in Target. Silver Level</div>
-                                      <% elsif @user.best_day == "80"  %>
+                                      <% elsif @user.best_day(@user) == "80%"  %>
                                         <img id='best_day_trophy' src="/trophies/80.png" alt="" width=75px>
                                         <div id='best_day_trophy_popup'>80% in Target. Bronze Level</div>
                                       <% else %>
@@ -184,6 +184,7 @@
                               </div>
                               <div class="col-xs-9 text-right">
                                 <h3>You've Logged <%= @user.daysinrow %> Days in a Row!</h3>
+                                <div><%= @user.time_left %></div>
                               </div>
                             </div>
                           </div>
@@ -191,7 +192,7 @@
                       <%else%>
                         <div class="panel panel-primary">
                           <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Import Data!</h3>
+                            <h3 class="panel-title"><i class="fa fa-folder-open fa-fw"></i>Import Data!</h3>
                           </div>
                           <div class="panel-body">
                             <div>
@@ -235,7 +236,7 @@
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> User Stats</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> User Stats</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="list-group">
@@ -248,7 +249,7 @@
                                         <i class="fa fa-fw fa-line-chart"></i> Average over the last 7 days
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge"><%= @user.days_logged %></span>
+                                        <span class="badge"><%= @user.days_logged(@user) %></span>
                                         <i class="fa fa-fw fa-calendar"></i> Days Logged This Month
                                     </a>
                                     <a href="#" class="list-group-item">
@@ -322,6 +323,7 @@
                                           <th>Level</th>
                                           <th>Points</th>
                                           <th>Icon of Choice</th>
+                                          <th>Badges Earned</th>
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -337,6 +339,21 @@
                                         <td><%= users[x].level %></td>
                                         <td><%= users[x].total_points(users[x]) %></td>
                                         <td><img src="<%= users[x].icon %>" height=25px></td>
+                                        <td>
+                                          <% if users[x].days_logged(users[x]) >= 14 %>
+                                            <img src="/trophies/calendar_silver.png" alt="" width=20px>
+                                            
+                                          <% elsif users[x].days_logged(users[x]) >= 7 %>
+                                            <img src="/trophies/calendar_bronze.png" alt="" width=20px>
+                                          <% end %>
+                                          <% if users[x].best_day(users[x]) == "100%" %>
+                                            <img src="/trophies/100.png" alt="" width=20px>
+                                          <% elsif users[x].best_day(users[x]) == "90%"  %>
+                                            <img src="/trophies/90.png" alt="" width=20px>
+                                          <% elsif users[x].best_day(users[x]) == "80%"  %>
+                                            <img src="/trophies/80.png" alt="" width=20px>
+                                          <% end %>
+                                        </td>
                                       </tr>
                                       <% x+=1 %>
                                     <%end%>

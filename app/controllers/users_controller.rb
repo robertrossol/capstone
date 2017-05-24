@@ -70,4 +70,8 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     render "spend.html.erb"
   end
+  def index
+    @user=User.find_by(id: current_user.id)
+    render "index.html.erb"
+  end
 end

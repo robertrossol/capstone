@@ -12,6 +12,7 @@
                                           <th>Level</th>
                                           <th>Points</th>
                                           <th>Icon of Choice</th>
+                                          <th>Badges Earned</th>
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -27,6 +28,25 @@
                                         <td><%= users[x].level %></td>
                                         <td><%= user_points =users[x].total_points(users[x]) %></td>
                                         <td><img src="<%= users[x].icon %>" height=25px></td>
+                                        <td>
+                                          <% if users[x].days_logged(users[x]) >= 14 %>
+                                            <img src="/trophies/calendar_silver.png" alt="" width=30px>
+                                            
+                                          <% elsif users[x].days_logged(users[x]) >= 7 %>
+                                            <img src="/trophies/calendar_bronze.png" alt="" width=30px>
+                                            
+                                          <% end %>
+                                          <% if users[x].best_day(users[x]) == "100%" %>
+                                            <img src="/trophies/100.png" alt="" width=30px>
+                                            
+                                          <% elsif users[x].best_day(users[x]) == "90%"  %>
+                                            <img src="/trophies/90.png" alt="" width=30px>
+                                           
+                                          <% elsif users[x].best_day(users[x]) == "80%"  %>
+                                            <img src="/trophies/80.png" alt="" width=30px>
+                                            
+                                          <% end %>
+                                        </td>
                                       </tr>
                                       <% x+=1 %>
                                     <%end%>

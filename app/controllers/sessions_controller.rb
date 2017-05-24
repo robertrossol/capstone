@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      flash[:success] = 'Successfully logged in!'
+      #flash[:success] = 'Successfully logged in!'
       if user.entries.length != 0
         redirect_to "/users/#{user.id}"
       else
