@@ -88,8 +88,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-green">
+                    <div class="col-lg-3 col-md-6" style=opacity:0.9;>
+                        <div class="panel panel-red">
                             <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-trophy fa-fw"></i> Badges </h3>
                             </div>
@@ -175,7 +175,7 @@
                             </div>
                           <% end %>
                         </div>
-                      <% if (Time.zone.now.minus_with_coercion(@user.points[-1].created_at+24.hour))<0 %>
+                      <% if @user.time_left != "Time to Enter Your Data!" %>
                         <div class="panel panel-primary">
                           <div class="panel-heading">
                             <div class="row">
@@ -263,24 +263,38 @@
                                       <% end %>
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">1 hour ago</span>
-                                        <i class="fa fa-fw fa-user"></i> A new user has been added
+                                        <span class="badge"> <%=@user.points[-1].created_at.strftime("%A, %b %d")%> </span>
+                                        <i class="fa fa-fw fa-check"></i> Last Day Logged
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">2 hours ago</span>
-                                        <i class="fa fa-fw fa-check"></i> Completed task: "pick up dry cleaning"
+                                        <span class="badge">  <% if @user.days_logged(@user) >= 14 %>
+                                            <img src="/trophies/calendar_silver.png" alt="" width=20px>
+                                            
+                                          <% elsif @user.days_logged(@user) >= 7 %>
+                                            <img src="/trophies/calendar_bronze.png" alt="" width=20px>
+                                          <% end %>
+                                          <% if @user.best_day(@user) == "100%" %>
+                                            <img src="/trophies/100.png" alt="" width=20px>
+                                          <% elsif @user.best_day(@user) == "90%"  %>
+                                            <img src="/trophies/90.png" alt="" width=20px>
+                                          <% elsif @user.best_day(@user) == "80%"  %>
+                                            <img src="/trophies/80.png" alt="" width=20px>
+                                          <%else%>
+                                            <i class="fa fa-question-circle"></i>
+                                          <% end %> </span>
+                                        <i class="fa fa-fw fa-trophy"></i> Badges Earned
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">yesterday</span>
-                                        <i class="fa fa-fw fa-globe"></i> Saved the world
+                                        <span class="badge"><%= @user.entries.count %></span>
+                                        <i class="fa fa-fw fa-check"></i> Total BG entries logged
                                     </a>
                                     <a href="#" class="list-group-item">
-                                        <span class="badge">two days ago</span>
-                                        <i class="fa fa-fw fa-check"></i> Completed task: "fix error on sales page"
+                                        <span class="badge"><%= @user.points[0].created_at.strftime("%A, %b %d")%></span>
+                                        <i class="fa fa-fw fa-user"></i> Created Account
                                     </a>
                                 </div>
                                 <div class="text-right">
-                                    <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="#"> <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>

@@ -7,13 +7,15 @@
             <div class="row">
                 <div class="col-xs-12 icon">
                     <img src="/images/<%=item %>" width=100%>
+                    <div class="row">
                     <%= item %>
                     <%= form_tag "/users/#{@user.id}", method: :patch do %>
                       <div>
                         <input type="text" class="form-control hidden" name="form_icon" value="/images/<%= item %>">
-                        <input type ="submit" value="Select">
+                        <input type ="submit" class="form-control" value="Select">
                       </div>
                     <% end %>
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,13 +34,15 @@
               <div class="row">
                   <div class="col-xs-12 icon">
                       <img src="/level2/<%=item %>" width=100%>
+                      <div class="row">
                       <%= item %>
                       <%= form_tag "/users/#{@user.id}", method: :patch do %>
                         <div>
                           <input type="text" class="form-control hidden" name="form_icon" value="/level2/<%= item %>">
-                          <input type ="submit" value="Select">
+                          <input type ="submit" class="form-control" value="Select">
                         </div>
                       <% end %>
+                      </div>
                   </div>
               </div>
           </div>
@@ -58,13 +62,15 @@
               <div class="row">
                   <div class="col-xs-12 icon">
                       <img src="/level3/<%=item %>" width=100%>
+                      <div class="row">
                       <%= item %>
                       <%= form_tag "/users/#{@user.id}", method: :patch do %>
                         <div>
                           <input type="text" class="form-control hidden" name="form_icon" value="/level3/<%= item %>">
-                          <input type ="submit" value="Select">
+                          <input type ="submit" class="form-control" value="Select">
                         </div>
                       <% end %>
+                      </div>
                   </div>
               </div>
           </div>
@@ -85,13 +91,14 @@
             <div class="row">
                 <div class="col-xs-12 icon">
                     <img src="/backgrounds/<%= background %>" width=100% height=90%>
-                    <!-- <%= background %> -->
+                    <div class="row">
                     <%= form_tag "/users/#{@user.id}", method: :patch do %>
                       <div>
                         <input type="text" class="form-control hidden" name="form_background" value="/backgrounds/<%=background %>">
-                        <input type ="submit" value="Select">
+                        <input type ="submit" class="form-control" value="Select">
                       </div>
                     <% end %>
+                    </div>
                 </div>
             </div>
         </div>
@@ -110,13 +117,14 @@
               <div class="row">
                   <div class="col-xs-12 icon">
                       <img src="/Blevel2/<%= background %>" width=100% height=90%>
-                      <!-- <%= background %> -->
+                      <div class="row">
                       <%= form_tag "/users/#{@user.id}", method: :patch do %>
                         <div>
                           <input type="text" class="form-control hidden" name="form_background" value="/Blevel2/<%=background %>">
-                          <input type ="submit" value="Select">
+                          <input type ="submit" class="form-control" value="Select">
                         </div>
                       <% end %>
+                      </div>
                   </div>
               </div>
           </div>
@@ -124,6 +132,8 @@
     </div>
   <%end%>
 <% end %>
+<div class="row">
+</div>
 <% if @user.level >= 3 %>
   <h1>Backgrounds: Level 3</h1>
   <% Dir.foreach('/Users/apple/Actualize/Capstone/public/Blevel3') do |background| %>
@@ -134,13 +144,14 @@
               <div class="row">
                   <div class="col-xs-12 icon">
                       <img src="/Blevel3/<%= background %>" width=100% height=90%>
-                      <!-- <%= background %> -->
+                      <div class="row">
                       <%= form_tag "/users/#{@user.id}", method: :patch do %>
                         <div>
                           <input type="text" class="form-control hidden" name="form_background" value="/Blevel3/<%=background %>">
-                          <input type ="submit" value="Select">
+                          <input type ="submit" class="form-control" value="Select">
                         </div>
                       <% end %>
+                      </div>
                   </div>
               </div>
           </div>

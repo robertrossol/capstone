@@ -63,7 +63,11 @@ class User < ApplicationRecord
       total_bg+= entry.bg
     end
     number = applicable_entries.length
-    total_bg/number
+    if number != 0
+      total_bg/number
+    else
+      "N/A"
+    end
   end
 
   def daysinrow
