@@ -346,7 +346,7 @@
                                     <% 7.times do %>
                                       <tr>
                                         <% if users[x] == @user %>
-                                          <td>YOU!!</td>
+                                          <td class="bold">YOU!!</td>
                                         <% else %>
                                           <td><%= users[x].username %></td>
                                         <% end %>
@@ -388,63 +388,6 @@
             <!-- /.container-fluid -->
 
         </div>
-<div class='hidden'>
-  <h1><%= @user.username%>'s Page</h1>
-  <h2>Email: <%= @user.email %></h2>
-  <h2>Device ID: <%= @user.device_id %>
-  <h2>Level: <%= @user.calc_level(@user) %></h2>
-  <h3>Points: <%= @user.total_points(@user) %> </h3>
-  <p>Points To Next Level: <%= @user.points_left %></p>
-  <div id='app'>
-  <button v-on:click="showBG">
-    Show/Hide BGs
-  </button>
-  </div>
-  <!-- <button v-on:click="showDaily()">
-  Show Today's Results/Earn Points
-  </button> -->
-  </h2>
-  <div class="entries hidden" style="height:120px;width:300px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
-    <h3></a> <% @user.entries.sort_by{|entry| entry.created_at}.each do |entry|%></h3>
-      <p><%= entry.created_at %> BG: <%= entry.bg %></p>
-    <h3><% end %></h3>
-  </div>
-  <%= form_tag "/points", method: :post, multipart: true do %>
-    <div>
-      <input type="file" name="file">
-      <input type='integer' class="hidden" name="value">
-    <input type ="submit" value="Add Points">
-    </div>
-  <% end %>
-  <!-- <div class="entries hidden"> <%= pie_chart @daychart %> </div> -->
-<%= pie_chart @daychart %>
-<%= pie_chart @chart %>
-<%= pie_chart @user.entries.group_by_hour(:created_at).count %>
-
-<%= line_chart @daily_chart_data, 
-{height: "400px", library: {hAxis: {title: ""}, 
- vAxis: {title: "BG", viewWindow: {min: 40, max:350}}}} %>
-<!-- <div id="myfirstchart" style="height: 250px;"></div>
-<script>
-new Morris.Line({
-  element: 'myfirstchart',
-  data: [
-    { time: '2008', BG: 20 },
-    { time: '2009', BG: 10 },
-    { time: '2010', BG: 5 },
-    { time: '2011', BG: 5 },
-    { time: '2012', BG: 20 }
-  ],
-  xkey: 'time',
-  ykeys: ['BG'],
-  labels: ['BG']
-});
-</script>
-</div>
- --><!-- data=[]
-@user.entries.each do |entry|
-  point={time: 'entry.created_at', BG: 'entry.bg'}
-  data<<point
-end -->
-
-</div>
+        </div>
+        </div>
+        </html>
