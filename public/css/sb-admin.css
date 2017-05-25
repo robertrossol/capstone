@@ -240,6 +240,7 @@ ul.alert-dropdown {
 }
 
 #logged_trophy_popup {
+    display: none;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -250,9 +251,10 @@ ul.alert-dropdown {
     border: 1px solid #e5e5e5;
     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     border-radius: 10px;
-    
+
 }
 #best_day_trophy_popup {
+    display: none;
     position: absolute;
     left: 50%;
     top: 50%;
