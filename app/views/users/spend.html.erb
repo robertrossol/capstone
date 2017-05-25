@@ -34,46 +34,45 @@
         </div>
         <div class="row">
         </div>
-        <div class="panel panel-green";>
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-question-circle fa-fw"></i>Icons Level 2</h3>
-            </div>
-            <div class="panel-body">
-              <% if @user.level >= 2 %>
-                <% Dir.foreach('/Users/apple/Actualize/Capstone/public/level2/') do |item| %>
-                  <%next if item == '.' or item == '..' or item[0] == '.'%>
-                  <div class="col-lg-1">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-12 icon">
-                                    <img src="/level2/<%=item %>" width=100%>
-                                    <div>
-                                      <h2></h2>
-                                    </div>
-                                    <div class="row">
-                                    <%= form_tag "/users/#{@user.id}", method: :patch do %>
-                                        <input type="text" class="form-control hidden" name="form_icon" value="/level2/<%= item %>">
-                                        <input type ="submit" class="form-control" value="Select">
-                                    <% end %>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <% if @user.level >= 2 %>
+          <div class="panel panel-green";>
+              <div class="panel-heading">
+                  <h3 class="panel-title"><i class="fa fa-question-circle fa-fw"></i>Icons Level 2</h3>
+              </div>
+              <div class="panel-body">                <% Dir.foreach('/Users/apple/Actualize/Capstone/public/level2/') do |item| %>
+                    <%next if item == '.' or item == '..' or item[0] == '.'%>
+                    <div class="col-lg-1">
+                      <div class="panel panel-green">
+                          <div class="panel-heading">
+                              <div class="row">
+                                  <div class="col-xs-12 icon">
+                                      <img src="/level2/<%=item %>" width=100%>
+                                      <div>
+                                        <h2></h2>
+                                      </div>
+                                      <div class="row">
+                                      <%= form_tag "/users/#{@user.id}", method: :patch do %>
+                                          <input type="text" class="form-control hidden" name="form_icon" value="/level2/<%= item %>">
+                                          <input type ="submit" class="form-control" value="Select">
+                                      <% end %>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                     </div>
-                  </div>
-                <% end %>
-              <%end%> 
-            </div>
-        </div>
+                  <% end %>
+                <%end%> 
+              </div>
+          </div>
         <div class="row">
         </div>
+        <% if @user.level >= 3 %>
         <div class="panel panel-red";>
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-question-circle fa-fw"></i>Icons Level 3</h3>
             </div>
             <div class="panel-body">
-              <% if @user.level >= 3 %>
                 <% Dir.foreach('/Users/apple/Actualize/Capstone/public/level3/') do |item| %>
                   <%next if item == '.' or item == '..' or item[0] == '.'%>
                   <div class="col-lg-1">
@@ -142,6 +141,7 @@
 </div>
 <div class="row">
 </div>
+<% if @user.level >= 2 %>
 <div class="panel panel-green";>
   <div class="panel-heading">
       <h3 class="panel-title"><i class="fa fa-question-circle fa-fw"></i>Backgrounds: Level 2</h3>
@@ -174,37 +174,40 @@
     <% end %>
   </div>
 </div>
+<%end%>
 <div class="row">
 </div>
-<div class="panel panel-yellow";>
-  <div class="panel-heading">
-      <h3 class="panel-title"><i class="fa fa-question-circle fa-fw"></i>Backgrounds: Level 3</h3>
-  </div>
-  <div class="panel-body">
-    <% Dir.foreach('/Users/apple/Actualize/Capstone/public/Blevel3') do |background| %>
-      <%next if background == '.' or background == '..' or background[0] == '.'%>
-      <div class="col-lg-3">
-        <div class="panel panel-yellow">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-12 icon">
-                        <img src="/Blevel3/<%= background %>" width=100% height=90%>
-                        <div>
-                          <h2></h2>
-                        </div>
-                        <div class="row">
-                        <%= form_tag "/users/#{@user.id}", method: :patch do %>
+<% if @user.level >= 3 %>
+  <div class="panel panel-red";>
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-question-circle fa-fw"></i>Backgrounds: Level 3</h3>
+    </div>
+    <div class="panel-body">
+      <% Dir.foreach('/Users/apple/Actualize/Capstone/public/Blevel3') do |background| %>
+        <%next if background == '.' or background == '..' or background[0] == '.'%>
+        <div class="col-lg-3">
+          <div class="panel panel-red">
+              <div class="panel-heading">
+                  <div class="row">
+                      <div class="col-xs-12 icon">
+                          <img src="/Blevel3/<%= background %>" width=100% height=90%>
                           <div>
-                            <input type="text" class="form-control hidden" name="form_background" value="/Blevel3/<%=background %>">
-                            <input type ="submit" class="form-control" value="Select">
+                            <h2></h2>
                           </div>
-                        <% end %>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                          <div class="row">
+                          <%= form_tag "/users/#{@user.id}", method: :patch do %>
+                            <div>
+                              <input type="text" class="form-control hidden" name="form_background" value="/Blevel3/<%=background %>">
+                              <input type ="submit" class="form-control" value="Select">
+                            </div>
+                          <% end %>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
+<%end%>
