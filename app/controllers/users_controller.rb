@@ -23,9 +23,11 @@ class UsersController < ApplicationController
     @chart[:high]=high
     if @user.entries.length != 0
       @total_bg = 0
-      @user.entries.where(created_at: (Time.zone.now - 30.days)..Time.zone.now).each do |entry|
+      # @user.entries.where(created_at: (Time.zone.now - 30.days)..Time.zone.now).each do |entry|
+      @user.entries.each do |entry|
         @total_bg+= entry.bg
       end
+      # @number=@user.entries.where(created_at: (Time.zone.now - 30.days)..Time.zone.now).length
       @number=@user.entries.length
       @avgbg = @total_bg/@number
       @a1c = (((46.7 + @avgbg) / 28.7).round(1))

@@ -94,6 +94,7 @@ class User < ApplicationRecord
     end
     @days_logged
   end
+  
   def best_day(user)
     if user.points.length != 0
       entry = user.points.order('value desc')
