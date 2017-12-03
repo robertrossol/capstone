@@ -12,15 +12,17 @@ class PointsController < ApplicationController
       total=0
       lines=0
       if @data
-        @data.drop(1).each do |line|  
+        @data.drop(1).each do |line| 
           x=line.split(';')
-          total+=x[2].to_i
-          lines+=1
-          time = ((x[0] + " " + x[1]).to_time)
-          if @user.entries.length==0 || @user.entries[-1].created_at < current_time-24.hours
-            if time+24.hours >= current_time 
-              Entry.create(bg: x[2], user_id: current_user.id, created_at: time)
-            end 
+          if x[2].length != 0
+            total+=x[2].to_i
+            lines+=1
+            time = ((x[0] + " " + x[1]).to_time)
+            if @user.entries.length==0 || @user.entries[-1].created_at < current_time-24.hours
+              if time+24.hours >= current_time
+                Entry.create(bg: x[2], user_id: current_user.id, created_at: time)
+              end 
+            end
           end
         end 
         @a1c=total/lines
